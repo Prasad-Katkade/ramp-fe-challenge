@@ -70,7 +70,7 @@ We don't have a real API for this challenge, so we added some utilities to simul
 
 ---
 
-# Bug 1: Select dropdown doesn't scroll with rest of the page
+# Bug 1: Select dropdown doesn't scroll with rest of the page ✅
 
 **How to reproduce:**
 
@@ -82,7 +82,9 @@ We don't have a real API for this challenge, so we added some utilities to simul
 
 **Actual:** Options dropdown stays in the same position as you scroll the page, losing the reference to the select input
 
-# Bug 2: Approve checkbox not working
+**Solution:** Inside InputSelect updated the style for "RampInputSelect--dropdown-container" included position absolute.
+
+# Bug 2: Approve checkbox not working ✅
 
 **How to reproduce:**
 
@@ -92,7 +94,9 @@ We don't have a real API for this challenge, so we added some utilities to simul
 
 **Actual:** Nothing happens
 
-# Bug 3: Cannot select _All Employees_ after selecting an employee
+**Solution:** Inside InputCheckbox updated the label and added htmlFor={`RampInputCheckbox-${id}`} and for checkbox updated onChange={(e) => onChange(e.target.checked)} id={`RampInputCheckbox-${id}`}
+
+# Bug 3: Cannot select _All Employees_ after selecting an employee ✅
 
 **How to reproduce:**
 
@@ -105,7 +109,9 @@ We don't have a real API for this challenge, so we added some utilities to simul
 
 **Actual:** The page crashes
 
-# Bug 4: Clicking on View More button not showing correct data
+**Solution:** In App   updated InputSelect to load all transactions  if (newValue === null || newValue.id==="") 
+
+# Bug 4: Clicking on View More button not showing correct data ✅
 
 **How to reproduce:**
 
@@ -116,7 +122,9 @@ We don't have a real API for this challenge, so we added some utilities to simul
 
 **Actual:** New transactions replace initial transactions, losing initial transactions
 
-# Bug 5: Employees filter not available during loading more data
+**Solution**:Updated usePaginatedTransactions hook to include previous transactions
+
+# Bug 5: Employees filter not available during loading more data ✅
 
 _This bug has 2 wrong behaviors that will be fixed with the same solution_
 
@@ -132,6 +140,8 @@ _This bug has 2 wrong behaviors that will be fixed with the same solution_
 
 **Actual:** The filter stops showing "Loading employees.." until `paginatedTransactions` is succeeded
 
+**Solution**:Updated loadAllTransactions fn in App removed setIsLoading shifted it below inside employeeUtils.loading useEffect
+
 ##### Part 2
 
 **How to reproduce:**
@@ -144,7 +154,9 @@ _This bug has 2 wrong behaviors that will be fixed with the same solution_
 
 **Actual:** The employees filter shows "Loading employees..." after clicking **View more** until new transactions are loaded.
 
-# Bug 6: View more button not working as expected
+**Solution**:Updated loadAllTransactions fn in App removed setIsLoading shifted it below inside employeeUtils.loading useEffect
+
+# Bug 6: View more button not working as expected ✅
 
 _This bug has 2 wrong behaviors that can be fixed with the same solution. It's acceptable to fix with separate solutions as well._
 
@@ -160,6 +172,8 @@ _This bug has 2 wrong behaviors that can be fixed with the same solution. It's a
 
 **Actual:** The **View more** button is visible even when transactions are filtered by employee. _You can even click **View more** button and get an unexpected result_
 
+**Solution**:Updated App and added new state isEmpSelected, updated the state when emp is selected inside InputSelect and hide the View More
+
 ##### Part 2
 
 **How to reproduce:**
@@ -172,7 +186,9 @@ _This bug has 2 wrong behaviors that can be fixed with the same solution. It's a
 
 **Actual:** When you reach the end of the data, the **View More** button is still showing and you are still able to click the button. If you click it, the page crashes.
 
-# Bug 7: Approving a transaction won't persist the new value
+**Solution**:Updated App and added new state isEmpSelected, updated the state when emp is selected inside InputSelect and hide the View More
+
+# Bug 7: Approving a transaction won't persist the new value ✅
 
 _You need to fix some of the previous bugs in order to reproduce_
 
@@ -190,6 +206,7 @@ _You need to fix some of the previous bugs in order to reproduce_
 **Expected:** In steps 6 and 8, toggled transaction kept the same value it was given in step 2 _(E.g. Social Media Ads Inc is unchecked)_
 
 **Actual:** In steps 6 and 8, toggled transaction lost the value given in step 2. _(E.g. Social Media Ads Inc is checked again)_
+**Solution**:Updated requests setTransactionApproval to  update data.transactions array, inside usePaginatedTransactions hook replaced fetchWithCache with fetchWithoutCache inside fetchAll fn
 
 ## Submission
 

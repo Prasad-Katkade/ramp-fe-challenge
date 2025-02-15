@@ -32,7 +32,8 @@ export const getTransactionsPaginated = ({
   }
 
   const nextPage = end < data.transactions.length ? page + 1 : null
-
+  console.log("paginated transactions",data.transactions.slice(start, end));
+  
   return {
     nextPage,
     data: data.transactions.slice(start, end),
@@ -51,10 +52,15 @@ export const setTransactionApproval = ({ transactionId, value }: SetTransactionA
   const transaction = data.transactions.find(
     (currentTransaction) => currentTransaction.id === transactionId
   )
-
-  if (!transaction) {
+  const transactionIndex = data.transactions.findIndex(
+    (currentTransaction) => currentTransaction.id === transactionId
+  );
+  
+  if (!transaction || transactionIndex===-1) {
     throw new Error("Invalid transaction to approve")
   }
-
   transaction.approved = value
+  data.transactions = data.transactions.map((transaction, index) =>
+    index === transactionIndex ? { ...transaction,approved: value} : transaction
+  );
 }
